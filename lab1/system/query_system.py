@@ -221,7 +221,7 @@ def run_query(query_string):
 
     value = int(query[7])
     op = query[6]
-    plan = planner(len(users[0]) if op != '=' else len(users), op, value)
+    plan = planner(len(users), op, value)
 
     if plan[1] == 'SeqScan':
         rows = seq_search(users, 'age', op, value)

@@ -50,7 +50,7 @@ run_query('select name from users where age = 30')
 
 ![scenario_2.png](media/scenario_2.png)
 
-### Исправленные условия
+### Исправленная функция
 
 ```python
 def hash_search(table, index, value):
@@ -83,9 +83,29 @@ run_query('select name from users where age >= 18')
 ![scenario_3.png](media/scenario_3.png)
 
 
-### Исправленные условия
+### Исправленное условия
 
 ```python
     if op == '>=':
         return a >= b
 ```
+
+---
+
+## Обращение 4
+
+При других операторах код в качестве N возвращал размер первого элемента.
+Избыточное условие убрано. 
+В исправленной версии кода все операторы работают по единым правилам.
+
+На картинке изображено исправление
+
+![scenario_4.png](media/scenario_4.png)
+
+### Исправленный вызов
+
+```python
+plan = planner(len(users), op, value)
+```
+
+
