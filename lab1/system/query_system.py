@@ -73,8 +73,6 @@ def hash_search(table, index, value):
     bucket = index[bucket_id]
 
     for key, row_ids in bucket:
-        if key != value:
-            return []
         if key == value:
             return [table[row_id] for row_id in row_ids]
 
