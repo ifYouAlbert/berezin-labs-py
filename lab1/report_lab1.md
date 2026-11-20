@@ -94,6 +94,13 @@ run_query('select name from users where age >= 18')
 
 ## Обращение 4
 
+```python
+reset_scenario(add_new=True)
+print('Реальное количество строк:', len(users))
+print('Количество столбцов:', len(users[0]))
+run_query('select name from users where age > 18')
+```
+
 При других операторах код в качестве N возвращал размер первого элемента.
 Избыточное условие убрано. 
 В исправленной версии кода все операторы работают по единым правилам.
@@ -108,4 +115,23 @@ run_query('select name from users where age >= 18')
 plan = planner(len(users), op, value)
 ```
 
+---
 
+## Обращение 5
+
+```python
+reset_scenario()
+print('До загрузки:')
+print('Статистика для age=18:', stats['age_counts'].get(18, 0))
+for i in range(15):
+    users.append([8 + i, f'New_{i+1}', 18])
+print('После загрузки без обновления статистики:')
+print('Статистика для age=18:', stats['age_counts'].get(18, 0))
+print('Фактическое число строк с age=18:', sum(r[2] == 18 for r in users))
+print('После явного обновления:')
+analyze(users)
+print('Статистика для age=18:', stats['age_counts'].get(18, 0))
+```
+
+Исходя из документации статистика пересчитывается только после вызова `analyze`.
+Система работает корректно, исправление не требуется.
