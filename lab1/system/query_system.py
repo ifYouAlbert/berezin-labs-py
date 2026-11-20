@@ -21,7 +21,7 @@ def compare(a, op, b):
     if op == '<':
         return a < b
     if op == '>=':
-        return a > b
+        return a >= b
     if op == '<=':
         return a <= b
     raise ValueError(f'Неизвестный оператор: {op}')

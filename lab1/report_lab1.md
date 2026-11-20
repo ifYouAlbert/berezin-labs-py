@@ -14,7 +14,7 @@ run_query('select name from users where age = 18')
 
 Решением является создание хэш индекса в ветке HashTable по аналогии с BST.
 
-На картинке изображён `git diff`
+На картинке изображено исправление
 
 ![scenario_1.png](media/scenario_1.png)
 
@@ -46,6 +46,8 @@ run_query('select name from users where age = 30')
 Функция hash_search не до конца проверяет стакан. 
 Поэтому решением было убрать условие досрочного выхода.
 
+На картинке изображено исправление
+
 ![scenario_2.png](media/scenario_2.png)
 
 ### Исправленные условия
@@ -61,4 +63,29 @@ def hash_search(table, index, value):
             return [table[row_id] for row_id in row_ids]
 
     return []
+```
+
+---
+
+## Обращение 3
+
+```python
+reset_scenario()
+run_query('select name from users where age >= 18')
+```
+
+Проблема в обращении 3 заключается в неправильно реализованном операторе. 
+Оператор `>=` в исходном коде реализован как `>`.
+ 
+
+На картинке изображено исправление
+
+![scenario_3.png](media/scenario_3.png)
+
+
+### Исправленные условия
+
+```python
+    if op == '>=':
+        return a >= b
 ```
