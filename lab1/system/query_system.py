@@ -228,7 +228,8 @@ def run_query(query_string):
     if plan[1] == 'SeqScan':
         rows = seq_search(users, 'age', op, value)
     elif plan[1] == 'HashTable':
-        rows = hash_search(users, age_hash_index, value)
+        _index = build_hash_index(users, 'age', bucket_count=len(age_hash_index))
+        rows = hash_search(users, _index, value)
     else:
         idx = build_bst_index(users, 'age')
         rows = bst_search(users, idx, op, value)
