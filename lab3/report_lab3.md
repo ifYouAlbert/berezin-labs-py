@@ -2,18 +2,6 @@
 
 ---
 
-Исходное состояние:
-```
-OK {'users': 6, 'tickets': 20, 'archive': 0, 'total': 20}
-```
-
-Пользователей - 6
-Обращений - 20
-Архивировано - 0
-Всего - 20
-
----
-
 ## Задание 1
 
 При запуске "python plan_runner.py --check", программа выдала ожидаемый порядок в MAINTENANCE_PLAN
@@ -182,4 +170,43 @@ OK
 
 ---
 
+## Задание 3
 
+В здании будет симулирован отказ системы
+
+```
+python plan_runner.py --phase maintenance
+python simulate_failure.py --confirm
+python plan_runner.py --phase recovery
+```
+
+Исходное состояние:
+```
+OK {'users': 6, 'tickets': 20, 'archive': 0, 'total': 20}
+```
+
+Пользователей - 6
+Обращений - 20
+Архивировано - 0
+Всего - 20
+
+После выполнения скрипта "simulate_failure" система стала выдавать ошибку при попытке выполнить команду "check"
+
+```
+ERROR ['Ошибка чтения: JSONDecodeError: Expecting value: line 2 column 1 (char 14)']
+```
+
+Вывод команды восстановления изображен на рисунке 3.
+
+![task_3_recovery.png](media/task_3_recovery.png)
+
+После выполнения восстановления была сделана проверка. Вывод проверки.
+
+```
+OK {'users': 6, 'tickets': 12, 'archive': 8, 'total': 20}
+```
+
+Пользователей - 6
+Обращений - 12
+Архивировано - 8
+Всего - 20
