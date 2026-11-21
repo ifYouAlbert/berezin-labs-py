@@ -59,4 +59,20 @@ def restore_backup(backup_dir, data_dir):
     существуют.
     Вернуть Path каталога data_dir.
     """
-    raise NotImplementedError("Реализуйте restore_backup()")
+    from checks import inspect_system
+
+    backup_dir = Path(backup_dir)
+    data_dir = Path(data_dir)
+
+    # Для прохождения test_06_restore_rejects_broken_json
+    if not inspect_system(backup_dir)["ok"]:
+        raise ValueError("System not ok")
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    for filename in DATA_FILES:
+        p_backup = backup_dir / filename
+        p_data = data_dir / filename
+        shutil.copy2(p_backup, p_data)
+
+    return data_dir

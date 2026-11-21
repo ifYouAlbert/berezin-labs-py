@@ -115,7 +115,7 @@ def create_backup(data_dir, backup_dir):
     return backup_dir
 ```
 
-Тесты проходят успешно. Вывод тестов:
+Тесты "backup" проходят успешно. Вывод тестов:
 
 ```
 test_01_backup_creates_both_files (test_maintenance.BackupRestoreTests.test_01_backup_creates_both_files) ... ok
@@ -127,3 +127,59 @@ Ran 3 tests in 0.008s
 
 OK
 ```
+
+Написанная реализация для функции "restore_backup"
+
+```python
+def restore_backup(backup_dir, data_dir):
+    from checks import inspect_system
+
+    backup_dir = Path(backup_dir)
+    data_dir = Path(data_dir)
+
+    # Для прохождения test_06_restore_rejects_broken_json
+    if not inspect_system(backup_dir)["ok"]:
+        raise ValueError("System not ok")
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    for filename in DATA_FILES:
+        p_backup = backup_dir / filename
+        p_data = data_dir / filename
+        shutil.copy2(p_backup, p_data)
+
+    return data_dir
+```
+
+Тесты "restore" проходят успешно. Вывод тестов:
+
+```
+test_04_restore_after_corruption (test_maintenance.BackupRestoreTests.test_04_restore_after_corruption) ... ok
+test_05_restore_rejects_missing_file (test_maintenance.BackupRestoreTests.test_05_restore_rejects_missing_file) ... ok
+test_06_restore_rejects_broken_json (test_maintenance.BackupRestoreTests.test_06_restore_rejects_broken_json) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.007s
+
+OK
+```
+
+Все тесты "maintenance" проходят успешно. Вывод тестов:
+
+```
+test_01_backup_creates_both_files (test_maintenance.BackupRestoreTests.test_01_backup_creates_both_files) ... ok
+test_02_backup_content_matches (test_maintenance.BackupRestoreTests.test_02_backup_content_matches) ... ok
+test_03_backup_cannot_overwrite (test_maintenance.BackupRestoreTests.test_03_backup_cannot_overwrite) ... ok
+test_04_restore_after_corruption (test_maintenance.BackupRestoreTests.test_04_restore_after_corruption) ... ok
+test_05_restore_rejects_missing_file (test_maintenance.BackupRestoreTests.test_05_restore_rejects_missing_file) ... ok
+test_06_restore_rejects_broken_json (test_maintenance.BackupRestoreTests.test_06_restore_rejects_broken_json) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.015s
+
+OK
+```
+
+---
+
+
