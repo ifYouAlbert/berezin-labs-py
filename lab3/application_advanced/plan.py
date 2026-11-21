@@ -5,18 +5,19 @@
 
 # Задача A: плановое обслуживание.
 MAINTENANCE_PLAN = [
-    "ARCHIVE",
-    "BACKUP_B1",
     "CHECK",
     "BACKUP_B0",
+    "ARCHIVE",
     "CHECK",
+    "BACKUP_B1",
 ]
 
 # Задача Б: после выполнения плана
 # запустите simulate_failure.py --confirm, и только потом исполняется этот план.
 # Порядок здесь тоже НЕВЕРНЫЙ.
 RECOVERY_PLAN = [
-    "RESTORE_B1",
     "DIAGNOSE",
+    "RESTORE_B1",
     "CHECK",
 ]
+
