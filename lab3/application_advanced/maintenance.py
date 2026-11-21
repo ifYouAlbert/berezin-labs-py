@@ -17,7 +17,26 @@ def create_backup(data_dir, backup_dir):
     Возвратить Path созданного каталога.
     Если копирование не удалось, не оставлять неполную копию.
     """
-    raise NotImplementedError("Реализуйте create_backup()")
+    data_dir = Path(data_dir)
+    backup_dir = Path(backup_dir)
+
+    backup_dir.mkdir(parents=True, exist_ok=False)
+
+    try:
+        for data_file in DATA_FILES:
+            if not data_dir.exists():
+                raise Exception(f"data_dir: {data_dir} must exist")
+
+            p_data_file = data_dir / data_file
+            p_backup_file = backup_dir / data_file
+            shutil.copy2(p_data_file, p_backup_file)
+
+            p_backup_file.write_bytes(p_data_file.read_bytes())
+    except:
+        shutil.rmtree(backup_dir)
+        raise
+
+    return backup_dir
 
 
 def archive_tickets(data, cutoff_date):
