@@ -22,6 +22,8 @@ python app.py list
 python app.py archive
 ```
 
+---
+
 ## Запуск плана
 
 Проверить оба плана без изменений файлов
@@ -29,7 +31,16 @@ python app.py archive
 python plan_runner.py --check
 ```
 
-Тестировние
+Тестирование
 ```bash
 python -m unittest -v test_plan.py
+```
+
+---
+
+## Maintenance
+
+Тестирование
+```bash
+python -m unittest -v test_maintenance.py
 ```
